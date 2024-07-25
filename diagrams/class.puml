@@ -1,0 +1,62 @@
+@startuml
+set namespaceSeparator ::
+
+entity "healthcare_managment::User" {
+  +String id
+  +String name
+  +String email
+  +String password
+  +String phone
+  +String address
+  +DateTime createdAt
+  +void login()
+  +void logout()
+  +void register()
+  +void resetPassword()
+}
+
+
+entity "healthcare_managment::Patient" {
+  -MedicalHistory medicalHistory
+  +void viewMedicalHistory()
+  +void bookAppointment()
+  +void manageProfile()
+}
+
+entity "healthcare_managment::Doctor" {
+  -List<Schedule> schedules
+  +void viewPatientDetails()
+  +void manageSchedule()
+  +void updateMedicalHistory()
+}
+
+entity "healthcare_managment::Admin" {
+  +void manageUsers()
+}
+
+"healthcare_managment::User" <|-- "healthcare_managment::Patient"
+"healthcare_managment::User" <|-- "healthcare_managment::Doctor"
+"healthcare_managment::User" <|-- "healthcare_managment::Admin"
+
+entity "healthcare_managment::MedicalHistory" {
+  +String diagnosis
+  +String treatment
+  +String prescription
+  +String bloodType
+  +String note
+  +DateTime createdAt
+}
+
+"healthcare_managment::Patient" o-- "healthcare_managment::MedicalHistory"
+
+entity "healthcare_managment::Schedule" {
+  +Patient patient
+  +DateTime startTime
+  +DateTime endTime
+  +String note
+  +DateTime createdAt
+}
+
+"healthcare_managment::Doctor" o-- "healthcare_managment::Schedule"
+
+@enduml
